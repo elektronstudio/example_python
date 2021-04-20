@@ -16,11 +16,11 @@ pip3 install six websocket-client
 
 2. Run
 
-```
-python3 example_chat.py
-```
+   ```
+   python3 example_chat.py
+   ```
 
-to test the message sending from Python and receiving in Javascript
+   to test the message sending from Python and receiving in Javascript
 
 3. Optionally open https://elektron.live/example_python for debugging
 
