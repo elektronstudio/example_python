@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body { font-family: monospace; white-space: pre-wrap; }}
+    </style>
+  </head>
+  <body>
+    <button id="send-message">Send test message from Javacript</button>
+
+    Received messages:
+
+    <div id="received-message"></div>
+
+    <script>
+      const url = "wss://ws-old-scgsa.ondigitalocean.app";
+      const socket = new WebSocket(url);
+
+      // Replace with your personal channelname for testing
+      // Debug at https://elektron.live/example_python
+
+      const channel = "example_python";
+
+      // Utility functions
+
+      const createMessage = (message) => {
+        const id = "abcdefghijklmnopqrstuvwxyz"
+          .split("")
+          .sort(() => Math.random() - 0.5)
+          .slice(0, 16)
+          .join("");
+        return JSON.stringify({
+          id,
+          datetime: new Date().toISOString(),
+          type: "",
+          channel: "",
+          userId: "",
+          userName: "",
+          value: "",
+          ...message,
+        });
+      };
+
+      const safeJsonParse = (str) => {
+        try {
+          return JSON.parse(str);
+        } catch (err) {
+          return null;
+        }
+      };
+
+      // Receiving websocket messages
+
+      socket.addEventListener("message", ({ data }) => {
+        const message = safeJsonParse(data);
+        if (message && message.channel === channel && message.type === "CHAT") {
+          console.log("Received message");
+          console.log(message);
+
+          // You can further parse message.value, run visualization functions etc
+
+          document
+            .getElementById("received-message")
+            .append(JSON.stringify(message, null, 2));
+        }
+      });
+
+      // Optional: Sending websocket messages
+
+      document.getElementById("send-message").addEventListener("click", () => {
+        socket.send(
+          createMessage({
+            channel,
+            type: "CHAT",
+            value: "Chat message from Javascript",
+          })
+        );
+      });
+    </script>
+  </body>
+</html>
