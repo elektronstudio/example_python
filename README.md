@@ -1,4 +1,4 @@
-### About
+### About...
 
 Python / JS example for connecting to elektron.art platform
 
