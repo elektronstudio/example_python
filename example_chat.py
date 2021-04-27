@@ -25,6 +25,8 @@ def on_message(ws, message):
 
 # Outgoing message in JSON format
 
+# https://pypi.org/project/websocket-client/
+
 
 def on_open(ws):
     def run(*args):
@@ -38,7 +40,7 @@ def on_open(ws):
             'type': 'CHAT',
             # value can also be array, struct as long as it serializable
             # to JSON
-            'value': 'Chat message from Python!'
+            'value': '0,1000'
         }
         ws.send(json.dumps(message))
 

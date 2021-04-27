@@ -14,7 +14,13 @@
 
     Received messages:
 
-    <div id="received-message"></div>
+    <div>User 0: </div><div id="user-0"></div></div>
+    
+    <div>User 1: <div id="user-1"></div></div>
+
+    <div id="user-2"></div>
+    <div id="user-3"></div>
+    <div id="user-4"></div>
 
     <script>
       const url = "wss://ws-old-scgsa.ondigitalocean.app";
@@ -59,13 +65,11 @@
         const message = safeJsonParse(data);
         if (message && message.channel === channel && message.type === "CHAT") {
           console.log("Received message");
-          console.log(message);
+          const data = message.value.split(",");
+          
+          // This is where you update your visualizations
 
-          // You can further parse message.value, run visualization functions etc
-
-          document
-            .getElementById("received-message")
-            .append(JSON.stringify(message, null, 2));
+          document.getElementById(`user-${data[0]}`).innerHTML = data[1];
         }
       });
 
